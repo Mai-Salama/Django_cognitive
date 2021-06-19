@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'bs=gbdws^pnh(h*2rb9(upemkel_=0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['limitless-sands-52942.herokuapp.com']
+ALLOWED_HOSTS = ['limitless-sands-52942.herokuapp.com', '127.0.0.1']
 
 
 # Application definition

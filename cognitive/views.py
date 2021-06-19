@@ -1,7 +1,7 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-import tensorflow
+import tensorflow as tf
 from tensorflow import keras
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -18,7 +18,7 @@ sequences =  tokenizer.texts_to_sequences(df['sentence'])
 word_index = tokenizer.word_index
 data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 
-model = keras.models.load_model("./LSTM2")
+model = tf.keras.models.load_model("./LSTM2")
 Categories = ["", "nondistorted", "Overgeneralization", "Should statement"]
 
 def prepare(text):

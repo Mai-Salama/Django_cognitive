@@ -1,7 +1,6 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-import tensorflow as tf
 from tensorflow import keras
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -9,7 +8,7 @@ import numpy as np
 import pandas as pd
 # Create your views here.
 
-df = pd.read_csv('C:/Users/Mai/allnumbered.csv', names=['sentence', 'label', 'source'])
+df = pd.read_csv('./allnumbered.csv', names=['sentence', 'label', 'source'])
 MAX_NB_WORDS = 10000
 MAX_SEQUENCE_LENGTH = 100
 tokenizer  = Tokenizer(num_words = MAX_NB_WORDS)

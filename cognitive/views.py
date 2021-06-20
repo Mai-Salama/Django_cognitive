@@ -2,9 +2,8 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 import tensorflow as tf
-from keras.preprocessing.text import Tokenizer
-from tensorflow.python.keras.utils import generic_utils
-from keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
 import pandas as pd
 # Create your views here.

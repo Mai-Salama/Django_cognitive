@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 import tensorflow as tf
 from keras.preprocessing.text import Tokenizer
+from tensorflow.python.keras.utils import generic_utils
 from keras.preprocessing.sequence import pad_sequences
 import numpy as np
 import pandas as pd
@@ -33,7 +34,7 @@ def cognitiveView(request):
     if request.session.has_key('prediction'):
         prediction = request.session.get('prediction')
         del request.session['prediction']
-        
+
     return render(request, 'cognitive.html', locals())
 
 def addsentence(request):

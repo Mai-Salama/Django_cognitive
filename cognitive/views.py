@@ -33,6 +33,7 @@ def cognitiveView(request):
     if request.session.has_key('prediction'):
         prediction = request.session.get('prediction')
         del request.session['prediction']
+        
     return render(request, 'cognitive.html', locals())
 
 def addsentence(request):

@@ -1,8 +1,9 @@
 <h1>Cognitive page</h1>
 
-<p>{{prediction}}</p>
 
-<form action="/addsentence/" method="post">{% csrf_token %}
+<form method="post">{% csrf_token %}
     <input type="text" name="content"/>
     <input type="submit" value="Submit"/>
 </form>
+
+<p>{{category}}</p>

@@ -30,13 +30,17 @@ def prepare(text):
 def cognitiveView(request):
     #pass the result of the prediction to the html page in a json
     #prediction = "Overgeneralization"
-    if request.POST['content']:
-        s = request.POST['content']
+    if request.POST.get('content'):
+        print('got here')
+        s = request.POST.get('content')
+        print(s)
         prepared_text = prepare(s)  
+        print(prepared_text)
         result = np.argmax(model.predict(prepared_text), axis=-1)
         category = Categories[result[0]]
+        print(category)
     else:
-        category = ""
+        category = "Didn't enter"
     return render(request, 'cognitive.html', {'prediction': category})
 
 # def addsentence(request):

@@ -19,6 +19,6 @@ from cognitive.views import cognitiveView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cognitive/', cognitiveView),
+    path('', cognitiveView),
     #path('addsentence/', addsentence)
 ]

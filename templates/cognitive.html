@@ -1,9 +1,75 @@
-<h1>Cognitive page</h1>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <title>Cognitive Distortions Detection</title>
+</head>
+<body style="background-color: #f9f2eb;">
+    <h1 style="color:#444341; font-family: Montserrat; font-size:x-large; text-align: center; padding-top: 25px;">Automatic Detection and Classification of Cognitive Distortions</h1>
+    <br>
+    <p style="color: #444341; font-family: Montserrat; font-size: medium;font-weight:bolder;padding-left: 25px;">Enter text :</p>
 
+    <form method="post">{% csrf_token %}
+        <textarea style="margin-left: 25px; box-shadow:1px 1px 2px 2px #444341;font-family: Montserrat;" cols="100" rows="10" type="text" name="content"></textarea>
+        <br> 
+        <br>
+        <input style="margin-left:25px; font-family: Montserrat; font-weight: bold;width: 80px;
+         height: 40px;border: 3px;border-radius: 20px; background-color: #ecddcd; color:#444341" type="submit" value="Submit"/>
+    </form>
+    <br>
+    <br>
 
-<form method="post">{% csrf_token %}
-    <input type="text" name="content"/>
-    <input type="submit" value="Submit"/>
-</form>
+    <!-- <p style="font-family: Montserrat; padding-left: 25px; color:#444341">S</p> -->
 
-<p>{{prediction}}</p>
+    <div id="output"></div>
+    <div id="trial"></div>
+
+    <script>
+    var i;
+    var colored = "{{colored}}"
+    //document.getElementById("trial").innerHTML = colored;
+    var x = colored.substr(1,colored.length-2);
+    //document.getElementById("trial").innerHTML = x;
+    var list = (x).split(",");
+    //document.getElementById("trial").innerHTML = list[0];
+    for (i=0; i<list.length; i+=2) {
+        cleanedelement = list[i].substr(6,list[i].length-12);
+        //document.getElementById("trial").innerHTML = i;
+        // trial.style.backgroundColor = "#DAC4AC";
+        // instancetrial = document.createTextNode(list[i]);
+        // document.getElementById("trial").appendChild(instancetrial);
+        if(cleanedelement == "Bright baige"){
+            //clean list[i+1]
+            cleaned = list[i+1].substr(7,list[i+1].length-13);
+            instance = document.createTextNode(cleaned);
+            //result = document.getElementById("output").appendChild(instance);
+            result.style.backgroundColor = "red";   
+        }
+        if(cleanedelement == "Bright pink"){
+            cleaned = list[i+1].substr(7,list[i+1].length-13);
+            instance = document.createTextNode(cleaned);
+            //result = document.getElementById("output").appendChild(instance);
+        }
+        else{
+            cleaned = list[i+1].substr(7,list[i+1].length-13);
+            instance = document.createTextNode("non distorted sentence");
+            //result = document.getElementById("output").appendChild(instance);
+        }
+    }
+    //document.getElementById("trial").innerHTML = list[0];
+    </script>
+
+    {%for sentence in paragraph%}
+        {%if category == "Overgeneralization"%}
+            <p><mark>{{sentence}}</mark></p>
+        {%elif category == "Should statement"%}
+            <p><mark>{{sentence}}</mark></p>
+        {% else %}
+            <p>{{sentence}}</p>
+        {% endif %}
+    {% endfor %}
+ 
+ 
+    {%for category in predictions%}
+        <li>{{category}}</li>
+    {% endfor %}
+
+</body>

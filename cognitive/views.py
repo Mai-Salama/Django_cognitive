@@ -1,3 +1,4 @@
+from json.encoder import JSONEncoder
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -6,6 +7,8 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
 import pandas as pd
+import re
+import json
 # Create your views here.
 
 df = pd.read_csv('./allnumbered.csv', names=['sentence', 'label', 'source'])
@@ -19,6 +22,7 @@ data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 
 model = tf.keras.models.load_model("./LSTM2")
 Categories = ["", "nondistorted", "Overgeneralization", "Should statement"]
+Colors = ["", "", "Bright baige", "Bright pink"]
 
 def prepare(text):
     test_sentence = [text]
@@ -28,28 +32,21 @@ def prepare(text):
     return test_data
 
 def cognitiveView(request):
-    #pass the result of the prediction to the html page in a json
-    #prediction = "Overgeneralization"
+    categories = []
+    colored = []
     if request.POST.get('content'):
-        print('got here')
         s = request.POST.get('content')
-        print(s)
-        prepared_text = prepare(s)  
-        print(prepared_text)
-        result = np.argmax(model.predict(prepared_text), axis=-1)
-        category = Categories[result[0]]
-        print(category)
-    else:
-        category = "Didn't enter"
-    return render(request, 'cognitive.html', {'prediction': category})
+        listS = re.split(r'(?<=\w\.)\s', s)
+        #loop on lists, prepare in and predict in the loop, and compile the answers
+        for sentence in listS:
+            prepared_text = prepare(sentence)
+            result = np.argmax(model.predict(prepared_text), axis=-1)
+            categories.append(Categories[result[0]])
+            # coloredobj = {"sentence": sentence, "color": Colors[result[0]]}
+            # coloredjson = json.dumps(coloredobj)
+            # print(coloredjson)
+            # colored.append(coloredjson)
+            colored.append(Colors[result[0]])
+            colored.append(sentence)
+    return render(request, 'cognitive.html', {'predictions': categories, 'colored': json.dumps(colored)})
 
-# def addsentence(request):
-#     s = request.POST['content']
-#     prepared_text = prepare(s)  
-#     result = np.argmax(model.predict(prepared_text), axis=-1)
-#     category = Categories[result[0]]
-#     #use the model to predict
-#     #somehow pass it to cognitiveView as prediction
-#     #redirect the browser to '/cognitive/'
-#     request.session['prediction'] = category
-#     return HttpResponseRedirect('/cognitive/')

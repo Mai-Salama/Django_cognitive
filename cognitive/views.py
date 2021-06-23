@@ -46,7 +46,8 @@ def cognitiveView(request):
             # coloredjson = json.dumps(coloredobj)
             # print(coloredjson)
             # colored.append(coloredjson)
+            comma = re.sub(',', ' ', str(sentence))
             colored.append(Colors[result[0]])
-            colored.append(sentence)
+            colored.append(comma)
     return render(request, 'cognitive.html', {'predictions': categories, 'colored': json.dumps(colored)})
 

@@ -17,59 +17,94 @@
     <br>
     <br>
 
-    <!-- <p style="font-family: Montserrat; padding-left: 25px; color:#444341">S</p> -->
+    <div class="grid-container" style="display: grid; grid-template-columns: 2fr 1fr; grid-gap: 20px;">
 
-    <div id="output"></div>
-    <div id="trial"></div>
+        
+        <div class="grid-child" id="output" style="font-family: Montserrat; max-width: 600px;padding-left: 25px;"></div>
+        
+        <div class="grid-child" id="categories" style="font-family: Montserrat;font-weight: bold;"> 
+            <p style="color: #DAC4AC;">Overgeneralization</p>
+            <p style="color:#ECCDE1">Should Statements</p>
+        </div>
+        
+    </div>
+
+    <!-- <p style="font-family: Montserrat; padding-left: 25px; color:#444341">S</p> -->
+    <div id="colorlist"></div>
 
     <script>
     var i;
-    var colored = "{{colored}}"
-    //document.getElementById("trial").innerHTML = colored;
+    var colored = "{{colored}}";
     var x = colored.substr(1,colored.length-2);
-    //document.getElementById("trial").innerHTML = x;
     var list = (x).split(",");
-    //document.getElementById("trial").innerHTML = list[0];
-    for (i=0; i<list.length; i+=2) {
-        cleanedelement = list[i].substr(6,list[i].length-12);
-        //document.getElementById("trial").innerHTML = i;
-        // trial.style.backgroundColor = "#DAC4AC";
-        // instancetrial = document.createTextNode(list[i]);
-        // document.getElementById("trial").appendChild(instancetrial);
+    //document.getElementById("colorlist").innerHTML = list;
+    
+    
+    var cleanedelement = list[0].substr(6,list[0].length-12);
+    if(cleanedelement == "Bright baige"){
+        var cleaned = list[1].substr(7,list[1].length-13);
+        var cleaned2 = cleaned.replace("&#x27;","'");
+        var elementspan = document.createElement("SPAN");
+        elementspan.innerText = cleaned2 + " ";
+        var result = document.getElementById("output").appendChild(elementspan);
+        result.style.backgroundColor = "#DAC4AC"; 
+        //result.style.fontFamily = "Montserrat";  
+    }
+    else if(cleanedelement == "Bright pink"){
+        cleaned = list[1].substr(7,list[1].length-13);
+        var cleaned2 = cleaned.replace("&#x27;","'");
+        elementspan = document.createElement("SPAN");
+        elementspan.innerText = cleaned2 + " ";
+        result = document.getElementById("output").appendChild(elementspan);
+        result.style.backgroundColor = "#ECCDE1";
+        //result.style.fontFamily = "Montserrat"; 
+    }
+    else{
+        cleaned = list[1].substr(7,list[1].length-13);
+        var cleaned2 = cleaned.replace("&#x27;","'");
+        elementspan = document.createElement("SPAN");
+        elementspan.innerText = cleaned2 + " ";
+        result = document.getElementById("output").appendChild(elementspan);
+        //result.style.fontFamily = "Montserrat"; 
+    }
+    
+    
+    for (i=2; i<list.length; i+=2) {
+        cleanedelement = list[i].substr(7,list[i].length-13);
+        //document.getElementById("colorlist").innerHTML = cleanedelement;
+        // var para = document.createElement("SPAN");         
+        // para.innerText = " " + cleanedelement;
+        // trial = document.getElementById("trial").appendChild(para);
+        // trial.style.backgroundColor = "#DAC4AC"
         if(cleanedelement == "Bright baige"){
-            //clean list[i+1]
             cleaned = list[i+1].substr(7,list[i+1].length-13);
-            instance = document.createTextNode(cleaned);
-            //result = document.getElementById("output").appendChild(instance);
-            result.style.backgroundColor = "red";   
+            var cleaned2 = cleaned.replace("&#x27;","'");
+            elementspan = document.createElement("SPAN");
+            elementspan.innerText = cleaned2 + " ";
+            result = document.getElementById("output").appendChild(elementspan);
+            result.style.backgroundColor = "#DAC4AC";  
+            //result.style.fontFamily = "Montserrat";  
         }
-        if(cleanedelement == "Bright pink"){
+        else if(cleanedelement == "Bright pink"){
+            //document.getElementById("colorlist").innerHTML = cleanedelement;
             cleaned = list[i+1].substr(7,list[i+1].length-13);
-            instance = document.createTextNode(cleaned);
-            //result = document.getElementById("output").appendChild(instance);
+            var cleaned2 = cleaned.replace("&#x27;","'");
+            elementspan = document.createElement("SPAN");
+            elementspan.innerText = cleaned2 + " ";
+            result = document.getElementById("output").appendChild(elementspan);
+            result.style.backgroundColor = "#ECCDE1";
+            //result.style.fontFamily = "Montserrat"; 
         }
         else{
             cleaned = list[i+1].substr(7,list[i+1].length-13);
-            instance = document.createTextNode("non distorted sentence");
-            //result = document.getElementById("output").appendChild(instance);
+            var cleaned2 = cleaned.replace("&#x27;","'");
+            elementspan = document.createElement("SPAN");
+            elementspan.innerText = cleaned2 + " ";
+            result = document.getElementById("output").appendChild(elementspan);
+            //result.style.fontFamily = "Montserrat"; 
         }
     }
     //document.getElementById("trial").innerHTML = list[0];
     </script>
-
-    {%for sentence in paragraph%}
-        {%if category == "Overgeneralization"%}
-            <p><mark>{{sentence}}</mark></p>
-        {%elif category == "Should statement"%}
-            <p><mark>{{sentence}}</mark></p>
-        {% else %}
-            <p>{{sentence}}</p>
-        {% endif %}
-    {% endfor %}
- 
- 
-    {%for category in predictions%}
-        <li>{{category}}</li>
-    {% endfor %}
 
 </body>

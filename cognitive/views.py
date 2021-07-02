@@ -26,7 +26,7 @@ Colors = ["", "", "Bright baige", "Bright pink"]
 
 def prepare(text):
     test_sentence = [text]
-    tokenizer.fit_on_texts(test_sentence)
+    #tokenizer.fit_on_texts(test_sentence)
     test_sequences =  tokenizer.texts_to_sequences(test_sentence)
     test_data = pad_sequences(test_sequences, maxlen=MAX_SEQUENCE_LENGTH)
     return test_data
